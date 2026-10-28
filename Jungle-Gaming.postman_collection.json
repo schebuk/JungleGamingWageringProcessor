@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "jungle-gaming-wagering",
+		"name": "Jungle Gaming Wagering Processor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Wallets",
+			"item": [
+				{
+					"name": "Create Wallet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"playerId\": \"player-test-001\",\n  \"initialBalance\": {\n    \"amount\": \"100.00\",\n    \"currency\": \"BRL\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/wallets",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["wallets"]
+						}
+					}
+				},
+				{
+					"name": "Get Wallet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/wallets/test-wallet-001",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["wallets", "test-wallet-001"]
+						}
+					}
+				},
+				{
+					"name": "Get Ledger",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/wallets/test-wallet-001/ledger?limit=50",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["wallets", "test-wallet-001", "ledger"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Reconciliation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/wallets/test-wallet-001/reconciliation",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["wallets", "test-wallet-001", "reconciliation"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Wagering",
+			"item": [
+				{
+					"name": "Submit Transaction (BET)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotency-Key",
+								"value": "provider-a:tx-test-001",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"providerId\": \"prov-a\",\n  \"externalTransactionId\": \"tx-test-001\",\n  \"playerId\": \"player-test\",\n  \"walletId\": \"test-wallet-001\",\n  \"roundId\": \"round-1\",\n  \"gameId\": \"slots-1\",\n  \"kind\": \"BET\",\n  \"amount\": \"10.00\",\n  \"currency\": \"BRL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/wagering/transactions",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["wagering", "transactions"]
+						}
+					}
+				},
+				{
+					"name": "Get Transaction by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/wagering/transactions/tx-test-001",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["wagering", "transactions", "tx-test-001"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Liveness",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/health/live",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["health", "live"]
+						}
+					}
+				},
+				{
+					"name": "Readiness",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/health/ready",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["health", "ready"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

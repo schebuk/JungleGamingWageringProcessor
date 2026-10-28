@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collection>
+  <name>Jungle Gaming Wagering Processor</name>
+  <request>
+    <name>Create Wallet</name>
+    <method>POST</method>
+    <url>http://localhost:3000/wallets</url>
+    <body>{
+  "playerId": "0192f28f-5dc0-7d58-bdb2-814ad6a0f4a1",
+  "initialBalance": { "amount": "1000.00", "currency": "BRL" }
+}</body>
+  </request>
+  <request>
+    <name>Get Wallet</name>
+    <method>GET</method>
+    <url>http://localhost:3000/wallets/{{wallet_id}}</url>
+  </request>
+  <request>
+    <name>Get Ledger</name>
+    <method>GET</method>
+    <url>http://localhost:3000/wallets/{{wallet_id}}/ledger?limit=50</url>
+  </request>
+  <request>
+    <name>Submit Transaction</name>
+    <method>POST</method>
+    <url>http://localhost:3000/wagering/transactions</url>
+    <header name="Idempotency-Key">provider-a:tx-123</header>
+    <body>{
+  "providerId": "provider-a",
+  "externalTransactionId": "tx-123",
+  "playerId": "0192f28f-5dc0-7d58-bdb2-814ad6a0f4a1",
+  "walletId": "{{wallet_id}}",
+  "roundId": "round-987",
+  "gameId": "fortune-chimp",
+  "kind": "BET",
+  "amount": "25.00",
+  "currency": "BRL"
+}</body>
+  </request>
+  <request>
+    <name>Get Transaction by ID</name>
+    <method>GET</method>
+    <url>http://localhost:3000/wagering/transactions/{{transaction_id}}</url>
+  </request>
+  <request>
+    <name>Reconciliation</name>
+    <method>POST</method>
+    <url>http://localhost:3000/wallets/{{wallet_id}}/reconciliation</url>
+  </request>
+  <request>
+    <name>Health Live</name>
+    <method>GET</method>
+    <url>http://localhost:3000/health/live</url>
+  </request>
+  <request>
+    <name>Health Ready</name>
+    <method>GET</method>
+    <url>http://localhost:3000/health/ready</url>
+  </request>
+</collection>
